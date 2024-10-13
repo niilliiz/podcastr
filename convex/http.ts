@@ -54,6 +54,7 @@ const validateRequest = async (
 ): Promise<WebhookEvent | undefined> => {
   const webhookSecret = process.env.CLERK_WEBHOOK_SECRET!;
   if (!webhookSecret) {
+    // todo
     throw new Error("CLERK_WEBHOOK_SECRET is not defined");
   }
   const payloadString = await req.text();

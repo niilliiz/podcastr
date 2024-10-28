@@ -29,3 +29,5 @@ export default function Home() {
     </div>
   );
 }
+
+// git config core.sshCommand "ssh -i ~/.ssh/personal_rsa"

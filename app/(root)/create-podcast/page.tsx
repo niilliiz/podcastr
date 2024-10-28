@@ -24,6 +24,8 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
+import GeneratePodcast from "@/components/GeneratePodcast";
+import GenerateThumbnail from "@/components/GenerateThumbnail";
 
 const formSchema = z.object({
   podcastTitle: z.string().min(2),
@@ -61,9 +63,10 @@ export default function CreatePodcast() {
               name="podcastTitle"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2.5">
-                  <FormLabel className='className="text-16 font-bold text-white-1"'>
+                  <FormLabel className="text-16 font-bold text-white-1">
                     Title
                   </FormLabel>
+
                   <FormControl>
                     <Input
                       className="input-class focus-visible:ring-offset-orange-1"
@@ -131,7 +134,10 @@ export default function CreatePodcast() {
               )}
             />
           </div>
-          <div className="flex flex-col pt-10">...</div>
+          <div className="flex flex-col pt-10">
+            <GeneratePodcast />
+            <GenerateThumbnail />
+          </div>
         </form>
       </Form>
     </section>

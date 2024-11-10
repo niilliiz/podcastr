@@ -1,28 +1,23 @@
 import { GeneratePodcastProps } from "@/types";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import React, { useState } from "react";
+import { Label } from "./ui/label";
+import { Textarea } from "./ui/textarea";
+import { Button } from "./ui/button";
 import { Loader } from "lucide-react";
-import { useState } from "react";
 import { useAction, useMutation } from "convex/react";
-import { generateAudioAction } from "@/convex/openai";
 import { api } from "@/convex/_generated/api";
 import { v4 as uuidv4 } from "uuid";
+
 import { useUploadFiles } from "@xixixao/uploadstuff/react";
-import { generateUploadUrl } from "@/convex/files";
 import { useToast } from "@/hooks/use-toast";
 
 const useGeneratePodcast = ({
-  voiceType,
   setAudio,
-  audio,
-  setAudioStorageId,
+  voiceType,
   voicePrompt,
-  setVoicePrompt,
-  setAudioDuration,
+  setAudioStorageId,
 }: GeneratePodcastProps) => {
   const [isGenerating, setIsGenerating] = useState(false);
-
   const { toast } = useToast();
 
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
@@ -32,15 +27,15 @@ const useGeneratePodcast = ({
 
   const getAudioUrl = useMutation(api.podcasts.getUrl);
 
-  async function generatePodcast() {
+  const generatePodcast = async () => {
     setIsGenerating(true);
     setAudio("");
 
     if (!voicePrompt) {
       toast({
-        title: "Please provide a vocieType to generate podcast",
+        title: "Please provide a voiceType to generate a podcast",
       });
-      setIsGenerating(false);
+      return setIsGenerating(false);
     }
 
     try {
@@ -50,7 +45,7 @@ const useGeneratePodcast = ({
       });
 
       const blob = new Blob([response], { type: "audio/mpeg" });
-      const fileName = `podcast-${uuidv4()}.mp4`;
+      const fileName = `podcast-${uuidv4()}.mp3`;
       const file = new File([blob], fileName, { type: "audio/mpeg" });
 
       const uploaded = await startUpload([file]);
@@ -59,22 +54,20 @@ const useGeneratePodcast = ({
       setAudioStorageId(storageId);
 
       const audioUrl = await getAudioUrl({ storageId });
-
       setAudio(audioUrl!);
       setIsGenerating(false);
-
       toast({
-        title: "Podcast generated successflly",
+        title: "Podcast generated successfully",
       });
     } catch (error) {
+      console.log("Error generating podcast", error);
       toast({
-        title: "Error creating podcast",
+        title: "Error creating a podcast",
         variant: "destructive",
       });
-      console.error("Error generating podcast", error);
       setIsGenerating(false);
     }
-  }
+  };
 
   return { isGenerating, generatePodcast };
 };
@@ -100,7 +93,7 @@ export default function GeneratePodcast(props: GeneratePodcastProps) {
         <Button
           type="submit"
           className="text-16 bg-orange-1 py-4 font-bold text-white-1"
-          // onClick={generatePodcast}
+          onClick={generatePodcast}
         >
           {isGenerating ? (
             <>

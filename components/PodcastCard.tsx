@@ -3,12 +3,12 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const PodcastCard = ({
+export default function PodcastCard({
   imgUrl,
   title,
   description,
   podcastId,
-}: PodcastCardProps) => {
+}: PodcastCardProps) {
   const router = useRouter();
 
   const handleViews = () => {
@@ -36,6 +36,4 @@ const PodcastCard = ({
       </figure>
     </div>
   );
-};
-
-export default PodcastCard;
+}

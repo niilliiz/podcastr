@@ -1,13 +1,14 @@
 "use client";
 import PodcastCard from "@/components/PodcastCard";
-
-import { podcastData } from "@/constants";
-import { useQueries, useQuery } from "convex/react";
+import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import LoaderSpinner from "@/components/LoaderSpinner";
 
 export default function Home() {
   const trendingPodcasts = useQuery(api.podcasts.getTrendingPodcasts);
-  // if (!trendingPodcasts) return <LoaderSpinner />;
+
+  if (!trendingPodcasts) return <LoaderSpinner />;
+
   return (
     <div className="mt-9 flex flex-col gap-9 md:overflow-hidden">
       <section className="flex flex-col gap-5">
@@ -30,5 +31,3 @@ export default function Home() {
     </div>
   );
 }
-
-// git config core.sshCommand "ssh -i ~/.ssh/personal_rsa"

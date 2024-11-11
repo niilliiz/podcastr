@@ -1,3 +1,5 @@
+"use client";
+
 import { PodcastCardProps } from "@/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -12,7 +14,7 @@ export default function PodcastCard({
   const router = useRouter();
 
   const handleViews = () => {
-    router.push(`/podcasts/${podcastId}`, {
+    router.push(`/podcast/${podcastId}`, {
       scroll: true,
     });
   };

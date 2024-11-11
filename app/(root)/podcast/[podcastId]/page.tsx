@@ -1,8 +1,14 @@
+"use client";
+
 import PodcastCard from "@/components/PodcastCard";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
 import { Id } from "@/convex/_generated/dataModel";
+import LoaderSpinner from "@/components/LoaderSpinner";
+import EmptyState from "@/components/EmptyState";
+import Image from "next/image";
+import PodcastDetailPlayer from "@/components/PodcastDetailPlayer";
 
 export default function PodcastDetail({
   params: { podcastId },
@@ -17,7 +23,7 @@ export default function PodcastDetail({
     podcastId,
   });
 
-  // if(!similarPodcasts || !podcast) return <LoaderSpinner />
+  if (!similarPodcasts || !podcast) return <LoaderSpinner />;
 
   return (
     <section className="flex w-full flex-col">
@@ -34,11 +40,11 @@ export default function PodcastDetail({
         </figure>
       </header>
 
-      {/*<PodcastDetailPlayer*/}
-      {/*  isOwner={isOwner}*/}
-      {/*  podcastId={podcast._id}*/}
-      {/*  {...podcast}*/}
-      {/*/>*/}
+      <PodcastDetailPlayer
+        isOwner={isOwner}
+        podcastId={podcast._id}
+        {...podcast}
+      />
 
       <p className="text-white-2 text-16 pb-8 pt-[45px] font-medium max-md:text-center">
         {podcast?.podcastDescription}
@@ -76,13 +82,11 @@ export default function PodcastDetail({
             )}
           </div>
         ) : (
-          <>
-            {/*<EmptyState*/}
-            {/*  title="No similar podcasts found"*/}
-            {/*  buttonLink="/discover"*/}
-            {/*  buttonText="Discover more podcasts"*/}
-            {/*/>*/}
-          </>
+          <EmptyState
+            title="No similar podcasts found"
+            buttonLink="/discover"
+            buttonText="Discover more podcasts"
+          />
         )}
       </section>
     </section>

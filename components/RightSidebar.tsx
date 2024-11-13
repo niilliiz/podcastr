@@ -21,9 +21,9 @@ export default function RightSidebar() {
 
   return (
     <section
-    // className={cn("right_sidebar h-[calc(100vh-5px)]", {
-    //   "h-[calc(100vh-140px)]": audio?.audioUrl,
-    // })}
+      className={cn("right_sidebar h-[calc(100vh-5px)]", {
+        // "h-[calc(100vh-140px)]": audio?.audioUrl,
+      })}
     >
       <SignedIn>
         <Link href={`/profile/${user?.id}`} className="flex gap-3 pb-12">

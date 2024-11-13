@@ -14,8 +14,8 @@ export default function EmptyState({
     <section className="flex-center size-full flex-col gap-3">
       <Image
         src="/icons/emptyState.svg"
-        width={250}
-        height={250}
+        width={200}
+        height={200}
         alt="empty state"
       />
       <div className="flex-center w-full max-w-[254px] flex-col gap-3">

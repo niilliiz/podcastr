@@ -50,15 +50,13 @@ export default function PodcastDetailPlayer({
   };
 
   const handlePlay = () => {
-    if (audioUrl && imageUrl) {
-      setAudio({
-        title: podcastTitle,
-        audioUrl,
-        imageUrl,
-        author,
-        podcastId,
-      });
-    }
+    setAudio({
+      title: podcastTitle,
+      audioUrl: audioUrl || "",
+      imageUrl: imageUrl || "",
+      author,
+      podcastId,
+    });
   };
 
   if (!imageUrl || !authorImageUrl) return <LoaderSpinner />;

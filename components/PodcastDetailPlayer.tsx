@@ -33,11 +33,13 @@ export default function PodcastDetailPlayer({
 
   const handleDelete = async () => {
     try {
-      await deletePodcast({ podcastId, imageStorageId, audioStorageId });
-      toast({
-        title: "Podcast deleted",
-      });
-      router.push("/");
+      if (imageStorageId && audioStorageId) {
+        await deletePodcast({ podcastId, imageStorageId, audioStorageId });
+        toast({
+          title: "Podcast deleted",
+        });
+        router.push("/");
+      }
     } catch (error) {
       console.error("Error deleting podcast", error);
       toast({
@@ -48,13 +50,15 @@ export default function PodcastDetailPlayer({
   };
 
   const handlePlay = () => {
-    setAudio({
-      title: podcastTitle,
-      audioUrl,
-      imageUrl,
-      author,
-      podcastId,
-    });
+    if (audioUrl && imageUrl) {
+      setAudio({
+        title: podcastTitle,
+        audioUrl,
+        imageUrl,
+        author,
+        podcastId,
+      });
+    }
   };
 
   if (!imageUrl || !authorImageUrl) return <LoaderSpinner />;

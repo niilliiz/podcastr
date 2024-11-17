@@ -7,22 +7,22 @@ import React from "react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useRouter } from "next/navigation";
-// import { useAudio } from "@/providers/AudioProvider";
 import { cn } from "@/lib/utils";
 import Header from "@/components/Header";
 import Carousel from "@/components/Carousel";
+import { useAudio } from "@/providers/AudioProviders";
 
 export default function RightSidebar() {
   const { user } = useUser();
   const topPodcasters = useQuery(api.users.getTopUserByPodcastCount);
   const router = useRouter();
 
-  // const { audio } = useAudio();
+  const { audio } = useAudio();
 
   return (
     <section
       className={cn("right_sidebar h-[calc(100vh-5px)]", {
-        // "h-[calc(100vh-140px)]": audio?.audioUrl,
+        "h-[calc(100vh-140px)]": audio?.audioUrl,
       })}
     >
       <SignedIn>

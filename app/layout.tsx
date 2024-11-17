@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import ConvexClerkClientProvider from "@/app/providers/ConvexClerkClientProvider";
+import ConvexClerkClientProvider from "@/providers/ConvexClerkClientProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

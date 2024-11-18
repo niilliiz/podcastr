@@ -6,22 +6,18 @@ import { useAudio } from "@/providers/AudioProviders";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { formatTime } from "@/lib/formatTime";
 
 export default function PodcastPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null);
+
   const [isPlaying, setIsPlaying] = useState(false);
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState(100);
   const [isMuted, setIsMuted] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
 
   const { audio } = useAudio();
-
-  const { user } = useUser();
-  console.log(audio, "audio");
-  const imgSrc = audio?.imageUrl || user?.imageUrl;
 
   const togglePlayPause = () => {
     if (audioRef.current?.paused) {
@@ -78,7 +74,7 @@ export default function PodcastPlayer() {
 
   useEffect(() => {
     const audioElement = audioRef.current;
-    if (audio?.audioUrl) {
+    if (audio?.podcastId) {
       if (audioElement) {
         audioElement.play().then(() => {
           setIsPlaying(true);
@@ -89,6 +85,7 @@ export default function PodcastPlayer() {
       setIsPlaying(true);
     }
   }, [audio]);
+
   const handleLoadedMetadata = () => {
     if (audioRef.current) {
       setDuration(audioRef.current.duration);
@@ -98,6 +95,12 @@ export default function PodcastPlayer() {
   const handleAudioEnded = () => {
     setIsPlaying(false);
   };
+
+  useEffect(() => {
+    if (audioRef.current) {
+      handleLoadedMetadata();
+    }
+  }, []);
 
   return (
     <div
@@ -113,9 +116,12 @@ export default function PodcastPlayer() {
       <section className="glassmorphism-black flex h-[112px] w-full items-center justify-between px-4 max-md:justify-center max-md:gap-5 md:px-12">
         <audio
           ref={audioRef}
-          src={audio?.audioUrl}
+          src={
+            audio?.audioUrl ||
+            "/audio/Sam_Smith_Proms_2024_I’m_not_the_only_one_FULL_PERFORMANCE.m4a"
+          }
           className="hidden"
-          onLoadedMetadata={handleLoadedMetadata}
+          // onLoadedMetadata={handleLoadedMetadata}
           onEnded={handleAudioEnded}
         />
         <div className="flex items-center gap-4 max-md:hidden">

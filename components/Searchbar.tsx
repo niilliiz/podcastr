@@ -18,7 +18,10 @@ export default function Searchbar() {
       router.push(`/discover?search=${debouncedValue}`);
     } else if (!debouncedValue && pathname === "/discover")
       router.push("/discover");
-  }, [router, pathname, debouncedValue]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname, debouncedValue]);
+
   return (
     <div className="relative mt-8 block">
       <Input

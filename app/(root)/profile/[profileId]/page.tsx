@@ -19,7 +19,6 @@ export default function Profile({ params }: { params: { profileId: string } }) {
 
   if (!user || !podcastsData) return <LoaderSpinner />;
 
-  // @ts-ignore
   return (
     <section className="mt-9 flex flex-col">
       <h1 className="text-20 font-bold text-white-1 max-md:text-center">

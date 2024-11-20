@@ -14,6 +14,7 @@ import { useAudio } from "@/providers/AudioProviders";
 
 export default function RightSidebar() {
   const { user } = useUser();
+
   const topPodcasters = useQuery(api.users.getTopUserByPodcastCount);
   const router = useRouter();
 
@@ -22,7 +23,7 @@ export default function RightSidebar() {
   return (
     <section
       className={cn("right_sidebar h-[calc(100vh-5px)]", {
-        "h-[calc(100vh-140px)]": audio?.audioUrl,
+        "h-[calc(100vh-140px)]": audio?.podcastId,
       })}
     >
       <SignedIn>

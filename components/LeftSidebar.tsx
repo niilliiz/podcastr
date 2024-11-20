@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 
 import { SignedIn, SignedOut, useClerk } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
+import { useAudio } from "@/providers/AudioProviders";
 
 export default function LeftSidebar() {
   const pathname = usePathname();
@@ -15,8 +16,14 @@ export default function LeftSidebar() {
 
   const { signOut } = useClerk();
 
+  const { audio } = useAudio();
+
   return (
-    <section className="left_sidebar">
+    <section
+      className={cn("left_sidebar h-[calc(100vh-5px)]", {
+        "h-[calc(100vh-140px)]": audio?.podcastId,
+      })}
+    >
       <nav className="flex flex-col gap-6">
         <Link
           href="/"
